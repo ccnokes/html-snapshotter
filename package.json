@@ -1,0 +1,31 @@
+{
+  "name": "html-snapshotter",
+  "version": "1.0.0",
+  "description": "A command-line tool and accompanying browser bookmarklet for saving snapshots of HTML.",
+  "main": "snapshotter.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "commander": "^2.9.0",
+    "inert": "^3.2.0",
+    "hapi": "^11.1.0",
+    "bluebird": "^3.0.5",
+    "chalk": "^1.1.1",
+    "mkdirp": "^0.5.1",
+    "node-monkey": "^0.2.16",
+    "joi": "^7.0.0",
+    "uglify-js": "^2.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "html",
+    "snapshot"
+  ],
+  "author": "Cameron Nokes",
+  "license": "MIT"
+}
