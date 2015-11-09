@@ -91,7 +91,15 @@ exports.start = function start(opts) {
             directory: {
                 path: opts.saveDir,
                 redirectToSlash: true,
-                index: true
+                index: false,
+                listing: true,
+                defaultExtension: 'html'
+            }
+        },
+        config: {
+            cache: {
+                expiresIn: 1000 * 60 * 24 * 7,
+                privacy: 'public'
             }
         }
     });
