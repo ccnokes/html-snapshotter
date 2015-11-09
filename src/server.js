@@ -24,7 +24,7 @@ exports.start = function start(opts) {
         method: 'GET',
         path: '/',
         handler(request, reply) {
-            reply('Hello, world!');
+            reply.redirect('/static');
         }
     });
 
@@ -47,7 +47,7 @@ exports.start = function start(opts) {
                     res => {
                         reply({
                             message: 'Saved',
-                            url: server.info.uri + res
+                            url: server.info.uri + '/' + res
                         }).code(201);
                     },
                     err => {

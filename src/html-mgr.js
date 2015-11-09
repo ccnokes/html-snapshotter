@@ -81,10 +81,6 @@ htmlMgr.saveHTML = function(baseFilePath, snapshot) {
     var htmlStr = cleanUpHTML(snapshot.html, snapshot.origin, snapshot.selector);
 
     return mkdirp(baseFilePath)
-        .then(() => {
-            return fs.writeFileAsync(filepath, htmlStr);
-        })
-        .then(() => {
-            return filepath;
-        });
+        .then(() => fs.writeFileAsync(filepath, htmlStr))
+        .then(() => filepath);
 };
