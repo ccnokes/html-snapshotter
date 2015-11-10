@@ -1,7 +1,7 @@
 const path = require('path');
 const url = require('url');
 const Promise = require('bluebird');
-const fs = Promise.promisifyAll(require('fs'));
+const writeFileAsync = Promise.promisify(require('fs').writeFile);
 const cheerio = require('cheerio');
 const mkdirp = Promise.promisify(require('mkdirp'));
 
@@ -10,22 +10,6 @@ var htmlMgr = exports;
 var excludes = ['script']; //strip these from html
 var rewrites = ['link', 'img']; //rewrite paths on these
 
-/**
- * @param  {String} html
- * @param  {String} origin - protocol + host
- * @param  {String} selector - a CSS selector (feature currently unused)
- * @return {String} cleaned html doc as a string
- */
-function cleanUpHTML(html, origin, selector) {
-    //load in the html
-    $ = cheerio.load(html);
-    //remove excluded elements
-    excludes.forEach(e => $(e).remove());
-    //rewrite url paths to not be relative
-    rewritePaths(origin, $(rewrites.join(',')) );
-    //return html string
-    return $.html(selector);
-}
 
 /**
  * @param {jqObject} el
@@ -66,6 +50,23 @@ function rewritePaths(origin, els) {
 }
 
 /**
+ * @param  {String} html
+ * @param  {String} origin - protocol + host
+ * @param  {String} selector - a CSS selector (feature currently unused)
+ * @return {String} cleaned html doc as a string
+ */
+htmlMgr.cleanUpHTML = function(html, origin, selector) {
+    //load in the html
+    $ = cheerio.load(html);
+    //remove excluded elements
+    excludes.forEach(e => $(e).remove());
+    //rewrite url paths to not be relative
+    rewritePaths(origin, $(rewrites.join(',')) );
+    //return html string
+    return $.html(selector);
+};
+
+/**
  * save the HTML to a directory
  * @param  {String} baseFilePath - where to save it
  * @param  {Object} snapshot
@@ -78,9 +79,9 @@ htmlMgr.saveHTML = function(baseFilePath, snapshot) {
         .toLowerCase()
         .replace(/\s+/g, '-');
 
-    var htmlStr = cleanUpHTML(snapshot.html, snapshot.origin, snapshot.selector);
+    var htmlStr = htmlMgr.cleanUpHTML(snapshot.html, snapshot.origin, snapshot.selector);
 
     return mkdirp(baseFilePath)
-        .then(() => fs.writeFileAsync(filepath, htmlStr))
+        .then(() => writeFileAsync(filepath, htmlStr))
         .then(() => filepath);
 };
