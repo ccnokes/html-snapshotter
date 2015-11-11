@@ -23,12 +23,14 @@
     "uglify-js": "^2.5.0"
   },
   "devDependencies": {
+    "covert": "^1.1.0",
     "faucet": "0.0.1",
     "rewire": "^2.4.0",
     "tape": "^4.2.2"
   },
   "scripts": {
-    "test": "tape ./test/*.js | faucet"
+    "test": "tape test/*.js | faucet",
+    "coverage": "covert -c test/*.js"
   },
   "keywords": [
     "html",

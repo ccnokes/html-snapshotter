@@ -1,6 +1,7 @@
 var test = require('tape');
 var rewire = require('rewire');
-var snapshotMgr = rewire('../src/snapshot-mgr');
+var path = require('path');
+var snapshotMgr = rewire(path.resolve(__dirname, '../src/snapshot-mgr'));
 var Promise = require('bluebird');
 
 
